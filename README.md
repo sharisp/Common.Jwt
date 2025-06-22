@@ -1,45 +1,40 @@
 # 🔐 EasyJWT – Simplify JWT Authentication in ASP.NET Core
 
-**EasyJWT** makes it easier to implement JWT authentication in your ASP.NET Core projects. With built-in support for access/refresh tokens, easy DI setup, and Swagger integration, it's designed for quick and secure authentication setup.
+**EasyJWT** is a lightweight utility that makes it easier to use JWT (JSON Web Tokens) in your ASP.NET Core applications. It supports both access and refresh tokens, and integrates seamlessly with Swagger for secure API testing.
 
 ---
 
 ## ✨ Features
 
-* ✅ Easy setup with `appsettings.json` configuration
-* 🔐 Built-in support for **Access Token** and **Refresh Token**
-* ♻️ Configurable expiration for both tokens
-* 🔄 Simple integration into your controller logic
-* 📘 **Swagger authentication** support included
-* 📦 Ready to be packaged as a NuGet library
+- ✅ Minimal configuration
+- 🔐 Access & Refresh token support
+- 🔄 Configurable expiration settings
+- 📘 Built-in Swagger support for `Bearer` authentication
+- 📦 Published as a NuGet package: `Andrew.CommonUse.JWT`
 
 ---
 
 ## 📦 Installation
 
-Coming soon as a NuGet package!
+Install it directly from NuGet:
 
-For now, clone or copy the code and reference it directly in your solution.
+### .NET CLI
 
----
+```bash
+dotnet add package Andrew.CommonUse.JWT --version 1.0.0
+````
 
-## ⚙️ Token Response Class
+### Package Manager
 
-```csharp
-public class TokenResponse
-{
-    public string AccessToken { get; set; }
-    public string RefreshToken { get; set; }
-    public DateTimeOffset AccessTokenExpiresAt { get; set; }
-    public DateTimeOffset RefreshTokenExpiresAt { get; set; }
-}
+```powershell
+NuGet\Install-Package Andrew.CommonUse.JWT -Version 1.0.0
 ```
 
 ---
 
 ## 🛠️ Setup
 
-### Step 1: Add configuration in `appsettings.json`
+### 1. `appsettings.json`
 
 ```json
 "JWT": {
@@ -53,7 +48,7 @@ public class TokenResponse
 
 ---
 
-### Step 2: Register JWT in `Program.cs`
+### 2. Register in `Program.cs`
 
 ```csharp
 builder.Services.AddJWTAuthentication(builder.Configuration);
@@ -61,10 +56,10 @@ builder.Services.AddJWTAuthentication(builder.Configuration);
 
 ---
 
-### Step 3: Inject and Use in Controller
+### 3. Inject & Use in Controller
 
 ```csharp
-public class LoginController
+public class LoginController : ControllerBase
 {
     private readonly AuthenticationTokenResponse _authenticationTokenResponse;
 
@@ -84,17 +79,62 @@ public class LoginController
 
 ---
 
-## 📌 Usage Summary
+## 🧾 Token Response Class
 
-* Add JWT section to `appsettings.json`
-* Call `AddJWTAuthentication` in `Program.cs`
-* Inject `AuthenticationTokenResponse` to generate tokens
+```csharp
+public class TokenResponse
+{
+    public string AccessToken { get; set; }
+    public string RefreshToken { get; set; }
+    public DateTimeOffset AccessTokenExpiresAt { get; set; }
+    public DateTimeOffset RefreshTokenExpiresAt { get; set; }
+}
+```
 
 ---
+
+## 📘 Swagger Integration
+
+### Add to `Program.cs`:
+
+```csharp
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter: Bearer {your JWT token}"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+```
+
+---
+
+## 📄 License
+
+MIT License
 
 ---
 
 ## 💬 Feedback / Contributing
 
-Feel free to open issues or submit pull requests to improve functionality or add features.
-
+Feel free to open issues or submit pull requests to improve functionality or add new features.
