@@ -1,7 +1,3 @@
-Here’s a clear and professional `README.md` for your GitHub project, showcasing your easy-to-use JWT authentication implementation, including Swagger integration and usage example:
-
----
-
 # 🔐 EasyJWT – Simplify JWT Authentication in ASP.NET Core
 
 **EasyJWT** makes it easier to implement JWT authentication in your ASP.NET Core projects. With built-in support for access/refresh tokens, easy DI setup, and Swagger integration, it's designed for quick and secure authentication setup.
