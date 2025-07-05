@@ -1,48 +1,49 @@
+````md
 # 🔐 EasyJWT – Simplify JWT Authentication in ASP.NET Core
 
-**EasyJWT** is a lightweight utility that makes it easier to use JWT (JSON Web Tokens) in your ASP.NET Core applications. It supports both access and refresh tokens, and integrates seamlessly with Swagger for secure API testing.
+**EasyJWT** is a lightweight library that simplifies the implementation of JWT (JSON Web Tokens) authentication in ASP.NET Core. It supports both **access** and **refresh tokens**, and includes seamless Swagger integration for testing secured APIs.
 
 ---
 
 ## ✨ Features
 
-- ✅ Minimal configuration
-- 🔐 Access & Refresh token support
-- 🔄 Configurable expiration settings
-- 📘 Built-in Swagger support for `Bearer` authentication
-- 📦 Published as a NuGet package: `Andrew.CommonUse.JWT`
+- ✅ Minimal configuration required
+- 🔐 Supports **Access** and **Refresh** tokens
+- ⏱️ Customizable expiration settings
+- 🧪 Out-of-the-box Swagger support with `Bearer` scheme
+- 📦 Available as a NuGet package: `Andrew.CommonUse.JWT`
 
 ---
 
 ## 📦 Installation
 
-Install it directly from NuGet:
+Install via NuGet:
 
-### .NET CLI
+### Using .NET CLI
 
 ```bash
-dotnet add package Andrew.CommonUse.JWT --version 1.0.0
+dotnet add package Andrew.CommonUse.JWT
 ````
 
-### Package Manager
+### Using Package Manager
 
 ```powershell
-NuGet\Install-Package Andrew.CommonUse.JWT -Version 1.0.0
+NuGet\Install-Package Andrew.CommonUse.JWT
 ```
 
 ---
 
-## 🛠️ Setup
+## 🛠️ Setup Instructions
 
-### 1. `appsettings.json`
+### 1. Configure `appsettings.json`
 
 ```json
 "JWT": {
-  "SecKey": "ssssaa@!#$!#$!#%TGadADFASDfasdfasdfaddfadfdfgagagadadfasdfafafawsfdaf12adfasfdadfsdadfsadsf",
+  "SecKey": "your-secret-key-goes-here",
   "ExpiresMinutes": 60,
   "RefreshTokenExpiresHours": 189,
-  "Issuer": "test",
-  "Audience": "test"
+  "Issuer": "your-issuer",
+  "Audience": "your-audience"
 }
 ```
 
@@ -56,30 +57,43 @@ builder.Services.AddJWTAuthentication(builder.Configuration);
 
 ---
 
-### 3. Inject & Use in Controller
+### 3. Inject and Use in Your Controller
 
 ```csharp
+[ApiController]
+[Route("api/[controller]")]
 public class LoginController : ControllerBase
 {
-    private readonly AuthenticationTokenResponse _authenticationTokenResponse;
+    private readonly AuthenticationTokenResponse _authTokenResponse;
 
-    public LoginController(AuthenticationTokenResponse authenticationTokenResponse)
+    public LoginController(AuthenticationTokenResponse authTokenResponse)
     {
-        _authenticationTokenResponse = authenticationTokenResponse;
+        _authTokenResponse = authTokenResponse;
     }
 
     [HttpPost("login")]
     public IActionResult Login(User user)
     {
-        var token = _authenticationTokenResponse.GetResponseToken(user.Id, user.UserName);
+        var token = _authTokenResponse.GetResponseToken(user.Id, user.UserName);
         return Ok(token);
     }
 }
 ```
 
+> `GetResponseToken` also accepts optional `roles` and `Others` for custom claims:
+
+```csharp
+TokenWithExpireResponse GetResponseToken(
+    long userId,
+    string userName,
+    List<string>? roles = null,
+    Dictionary<string, string>? others = null
+);
+```
+
 ---
 
-## 🧾 Token Response Class
+## 🧾 Token Response Structure
 
 ```csharp
 public class TokenResponse
@@ -91,12 +105,9 @@ public class TokenResponse
 }
 ```
 
-## 📄 License
-
-MIT License
-
 ---
 
-## 💬 Feedback / Contributing
+## 📄 License
 
-Feel free to open issues or submit pull requests to improve functionality or add new features.
+This project is licensed under the **MIT License**.
+

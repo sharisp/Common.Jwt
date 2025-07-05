@@ -1,10 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+<PropertyGroup>
+  <TargetFramework>net8.0</TargetFramework>
+  <ImplicitUsings>enable</ImplicitUsings>
+  <Nullable>enable</Nullable>
+
+  <!-- BEGIN: Essential NuGet Packaging Properties for Easy Using -->
+
+  <IsPackable>true</IsPackable>
+
+  <PackageId>Andrew.CommonUse.JWT</PackageId>
+  <Version>1.1.0</Version>
+  <Authors>Andrew Wang</Authors>
+  <Company></Company>
+   <Description>
+    Making it easier to implement JWT authentication in your ASP.NET Core projects. With built-in support for access/refresh tokens, easy DI setup, and Swagger integration, it's designed for quick and secure authentication setup
+  </Description> 
+  <PackageTags>JWT;Utilities</PackageTags>
+  <RepositoryUrl>https://github.com/sharisp/Common.Jwt</RepositoryUrl>
+  <RepositoryType>git</RepositoryType>
+   <PackageLicenseExpression>MIT</PackageLicenseExpression> 
+  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+ 
+  <NoWarn>$(NoWarn);1591</NoWarn> 
+  <PublishRepositoryUrl>true</PublishRepositoryUrl> 
+  <EmbedUntrackedSources>true</EmbedUntrackedSources> 
+  <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder> 
+  <PackageReadmeFile>README.md</PackageReadmeFile> 
+</PropertyGroup>
+
+<!-- You need to explicitly include the README.md file if you use <PackageReadmeFile>.
+     Place this <ItemGroup> outside the <PropertyGroup>, but still within the <Project> tags. -->
+<ItemGroup>
+  <None Include="README.md" Pack="true" PackagePath="\" />
+  <!-- 'Pack="true"' means include it in the NuGet package.
+       'PackagePath="\"' means put it at the root of the package. -->
+</ItemGroup>
+
+<ItemGroup>
+  <None Include="README.md" Pack="true" PackagePath="\" />
+</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.17" />
