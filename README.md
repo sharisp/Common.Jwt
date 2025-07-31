@@ -10,6 +10,7 @@
 - ✅ Minimal configuration required
 - 🔐 Supports **Access** and **Refresh** tokens
 - ⏱️ Customizable expiration settings
+-  support custom claims by passing other claims as a dictionary
 - 🧪 Out-of-the-box Swagger support with `Bearer` scheme
 - 📦 Available as a NuGet package: `Andrew.CommonUse.JWT`
 
