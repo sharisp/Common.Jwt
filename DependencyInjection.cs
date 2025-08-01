@@ -22,6 +22,10 @@ namespace Common.Jwt
                 .AddJwtBearer(x =>
                 {
                     var jwtOpt = configuration.GetSection("JWT").Get<JwtOptions>();
+                    if (jwtOpt==null)
+                    {
+                        throw new Exception("no JWT config");
+                    }
                     byte[] keyBytes = Encoding.UTF8.GetBytes(jwtOpt.SecKey);
                     var secKey = new SymmetricSecurityKey(keyBytes);
                     x.TokenValidationParameters = new()
