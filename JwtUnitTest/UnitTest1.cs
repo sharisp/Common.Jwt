@@ -34,9 +34,7 @@ namespace JwtUnitTest
 
         [TestMethod]
         public void TestJwtResponse()
-        {
-            // 2. 获取 AuthenticationTokenResponse 实例
-
+        {            
             Assert.IsNotNull(authenticationTokenResponse, "AuthenticationTokenResponse should not be null");
             var token = authenticationTokenResponse.GetResponseToken(1, "testusername", null, null);
             // 3. 验证默认值
