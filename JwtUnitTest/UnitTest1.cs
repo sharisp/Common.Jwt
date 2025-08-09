@@ -1,0 +1,49 @@
+using Common.Jwt;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace JwtUnitTest
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        private ServiceProvider _serviceProvider;
+
+        private AuthenticationTokenResponse authenticationTokenResponse;
+        [TestInitialize] // 每个测试方法运行前执行
+        public void Setup()
+        {
+            // 1. 构建 DI 容器
+            var services = new ServiceCollection();
+            services.AddJWTAuthentication(new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build());
+            _serviceProvider = services.BuildServiceProvider();
+            authenticationTokenResponse = _serviceProvider.GetService<AuthenticationTokenResponse>();
+
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            if (_serviceProvider != null)
+            {
+                _serviceProvider.Dispose();
+            }
+        }
+
+
+        [TestMethod]
+        public void TestJwtResponse()
+        {
+            // 2. 获取 AuthenticationTokenResponse 实例
+
+            Assert.IsNotNull(authenticationTokenResponse, "AuthenticationTokenResponse should not be null");
+            var token = authenticationTokenResponse.GetResponseToken(1, "testusername", null, null);
+            // 3. 验证默认值
+            Assert.IsNotNull(token, "Token  should not be null");
+            Assert.IsTrue(token.AccessToken.Length > 0, "Token should have value");
+          
+        }
+    }
+}
