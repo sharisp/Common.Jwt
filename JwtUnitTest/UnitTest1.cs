@@ -10,10 +10,9 @@ namespace JwtUnitTest
         private ServiceProvider _serviceProvider;
 
         private AuthenticationTokenResponse authenticationTokenResponse;
-        [TestInitialize] // 每个测试方法运行前执行
+        [TestInitialize] // run before each test
         public void Setup()
         {
-            // 1. 构建 DI 容器
             var services = new ServiceCollection();
             services.AddJWTAuthentication(new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
