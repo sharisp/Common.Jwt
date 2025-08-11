@@ -37,10 +37,11 @@ namespace JwtUnitTest
         {            
             Assert.IsNotNull(authenticationTokenResponse, "AuthenticationTokenResponse should not be null");
             var token = authenticationTokenResponse.GetResponseToken(1, "testusername", null, null);
-            // 3. 验证默认值
+           
             Assert.IsNotNull(token, "Token  should not be null");
             Assert.IsTrue(token.AccessToken.Length > 0, "Token should have value");
           
         }
+    
     }
 }
