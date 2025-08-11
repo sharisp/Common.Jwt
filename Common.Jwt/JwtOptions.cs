@@ -1,5 +1,8 @@
 ﻿namespace Common.Jwt
 {
+    /// <summary>
+    /// jwt configuration options.
+    /// </summary>
     public class JwtOptions
     {
         public string SecKey { get; set; } = "";
