@@ -10,7 +10,14 @@ namespace Common.Jwt
     public static class DependencyInjection
     {
 
-    
+    /// <summary>
+    /// for DI use
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="Exception"></exception>
         public static IServiceCollection AddJWTAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
