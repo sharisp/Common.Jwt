@@ -55,6 +55,24 @@ namespace JwtUnitTest
             Assert.IsTrue(token.AccessToken.Length > 0, "Token should have value");
 
         }
+        [TestMethod]
+        public void TestJwtResponseWithRolesAndOthers()
+        {
+            var keyValuePairs = new Dictionary<string, string>()
+            {
+                { "CustomKey1", "CustomValue1" },
+                { "CustomKey2", "CustomValue2" }
+            };
+            Assert.IsNotNull(authenticationTokenResponse, "AuthenticationTokenResponse should not be null");
+            var token = authenticationTokenResponse.GetResponseToken(1, "testusername", new List<string>()
+            {
+                "Admin",
+            },
+           keyValuePairs);
 
+            Assert.IsNotNull(token, "Token  should not be null");
+            Assert.IsTrue(token.AccessToken.Length > 0, "Token should have value");
+
+        }
     }
 }
