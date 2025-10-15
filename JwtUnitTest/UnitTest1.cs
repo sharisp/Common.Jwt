@@ -39,6 +39,8 @@ namespace JwtUnitTest
             var token = authenticationTokenResponse.GetResponseToken(1, "testusername", null, null);
            
             Assert.IsNotNull(token, "Token  should not be null");
+
+            Assert.IsNotNull(token.RefreshToken, "RefreshToken  should not be null");
             Assert.IsTrue(token.AccessToken.Length > 0, "Token should have value");
           
         }
